@@ -1,20 +1,13 @@
-//   import jwtDecode, { JwtPayload } from "jwt-decode";
-
-import router from "@/router";
-import {
-  getCookieToken,
-  removeToken,
-  setCookieToken,
-} from "@/services/cookieService";
 import { useAuthStore } from "@/store/useAuthStore";
-import jwtDecode, { JwtPayload } from "jwt-decode";
 import axios from "axios";
 //   import router from "@/router";
 
-//   const { MODE, VITE_PROD_API_URL, VITE_DEV_API_URL } = import.meta.env;
+const { MODE } = import.meta.env;
 //   const isDev = MODE === "development";
 const baseURL =
-  /*'https://portal.tisini.co.ke'*/ "https://f28a-102-68-78-66.ngrok-free.app"; //'http://portal.tisini.co.ke'
+  MODE === "development"
+    ? "https://f28a-102-68-78-66.ngrok-free.app"
+    : "https://portal.tisini.co.ke";
 const authStore = useAuthStore();
 const pubTisiniApi = axios.create({
   baseURL: baseURL,
