@@ -7,7 +7,19 @@ import { useAuthStore } from "@/store/useAuthStore";
 
 const router = createRouter({
   history: createWebHistory(),
-  routes: [baseRouter, quizRouter],
+  routes: [
+    baseRouter,
+    quizRouter,
+    {
+      // Match any other route
+      path: "/:pathMatch(.*)*",
+      name: "all-not-found",
+      component: () =>
+        import(
+          /* webpackChunkName: "all-not-found" */ "@/components/NotFound.vue"
+        ),
+    },
+  ],
 });
 /**
  * Router Guard
@@ -17,8 +29,6 @@ router.beforeEach((to, _from, next) => {
   const meta = to.meta as unknown as TisiniRouteMetaInterface;
 
   if (store.isAuthenticated) {
-  
-
     // Check if user's refresh token is valid
     if (!store.isRefreshTokenValid) {
       store.logoutUser();
@@ -28,7 +38,7 @@ router.beforeEach((to, _from, next) => {
     //Check route name is forgot password or reset password
     if (to.name === "forgotPassword" || to.name === "resetPassword") {
       console.log("forgotPassword or resetPassword");
-      
+
       if (store.isAuthenticated) {
         store.logoutUser();
         return next(to);
