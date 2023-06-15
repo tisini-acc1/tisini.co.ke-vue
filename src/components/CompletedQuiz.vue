@@ -3,11 +3,14 @@ import { storeToRefs } from "pinia";
 import { ref } from "vue";
 import { useQuizStore } from "@/store/useQuizStore";
 import { submitTisiniQuiz } from "@/api/requests/base";
+import Loader from "@/components/Loader.vue";
 
 const { getScoreSummary } = storeToRefs(useQuizStore());
 const quizStore = useQuizStore();
 const quizSubmitted = ref(false);
+const isLoading = ref(false);
 const submitQuiz = () => {
+  isLoading.value = true;
   submitTisiniQuiz(
     getScoreSummary.value?.questionSetUid!,
     {
@@ -23,10 +26,12 @@ const submitQuiz = () => {
     (data: any, err: any) => {
       if (err) {
         console.log({ err });
+        isLoading.value = false;
       } else {
         console.log({ data });
         quizSubmitted.value = true;
         quizStore.resetState()
+        isLoading.value = false;
       }
     }
   );
@@ -35,6 +40,7 @@ const submitQuiz = () => {
 
 <template>
   <div class="flex flex-col items-center justify-center min-h-screen">
+    <loader :is-loading="isLoading" />
     <div
       class="p-6 m-4 bg-white border text-center rounded shadow-lg max-w-2xl w-full"
       v-if="!quizSubmitted">
