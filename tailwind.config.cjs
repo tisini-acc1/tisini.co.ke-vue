@@ -5,16 +5,27 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          100: "#E6F1EC",
-          200: "#B8DBBF",
-          300: "#8AC59F",
-          400: "#5DBB85",
-          500: "#3AAE6F",
-          600: "#2D8E5A",
-          700: "#1F6E45",
-          800: "#114F30",
-          900: "#08301C",
+          lightest: "#8AB6D6",
+          lighter: "#418FB9",
+          DEFAULT: "#05233D",
+          darker: "#031B29",
+          darkest: "#010E15"
         },
+        secondary: {
+          lightest: "#FFE7AA",
+          lighter: "#FFD166",
+          DEFAULT: "#EF6F00",
+          darker: "#BF5400",
+          darkest: "#8F3F00"
+        },
+        light: {
+          DEFAULT: "#FDFDFD",
+          darker: "#F1F1F1"
+        },
+        black: {
+          lighter: "#1C1C1C",
+          DEFAULT: "#121212"
+        }
       },
       fontFamily: {
         sans: ["Inter", "sans-serif"],

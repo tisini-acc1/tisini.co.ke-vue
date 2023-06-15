@@ -5,7 +5,7 @@ import { useAuthStore } from "@/store/useAuthStore";
 const { isAuthenticated } = storeToRefs(useAuthStore());
 </script>
 <template>
-  <header class="w-full shadow-md sticky top-0 bg-blue-800 z-[20000]">
+  <header class="w-full shadow-md sticky top-0 bg-primary z-[20000]">
     <div class="max-w-7xl mx-auto p-4 flex items-center justify-between">
       <div class="flex items-center gap-2 text-white uppercase">
         <HomeIcon class="h-6 w-6" />
