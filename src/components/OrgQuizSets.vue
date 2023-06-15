@@ -8,6 +8,7 @@ import { storeToRefs } from "pinia";
 import { computed, onBeforeMount, onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import { OrganizationInterface } from "@/types";
+import { qSetStatus } from "@/utils/QsetStatus";
 const quizStore = useQuizStore();
 const { getOrganizations, getCurrentQuestionSet } = storeToRefs(quizStore);
 const router = useRouter();
@@ -54,18 +55,18 @@ watch(orgLength, (newVal, oldVal) => {
   }
 });
 onMounted(() => {
-    // console.log({ qsetId, orgId, orgLength, orgs: getOrganizations.value });
-    const currentOrg = getOrganizations.value.find((org) => {
-      // console.log({ orgId, org: org.uid });
-      return org.uid === orgId;
-    });
-    // console.log({ currentOrg });
-    quizStore.setCurrentOrganization(currentOrg!);
-    const currentQset = currentOrg?.question_sets.find(
-      (qset) => qset.uid === qsetId
-    );
-    // console.log({ currentOrg, currentQset });
-    quizStore.setCurrentQuerySet(currentQset!);
+  // console.log({ qsetId, orgId, orgLength, orgs: getOrganizations.value });
+  const currentOrg = getOrganizations.value.find((org) => {
+    // console.log({ orgId, org: org.uid });
+    return org.uid === orgId;
+  });
+  // console.log({ currentOrg });
+  quizStore.setCurrentOrganization(currentOrg!);
+  const currentQset = currentOrg?.question_sets.find(
+    (qset) => qset.uid === qsetId
+  );
+  // console.log({ currentOrg, currentQset });
+  quizStore.setCurrentQuerySet(currentQset!);
 });
 const quizSetStatus = computed(() => {
   const qset = getCurrentQuestionSet.value;
@@ -107,57 +108,83 @@ const startQuiz = () => {
     },
   });
 };
+const qsetCurrentStatus = computed(() => {
+  const status = qSetStatus.getStatus(getCurrentQuestionSet.value!);
+  switch (status) {
+    case "not-started":
+      return {
+        text: "Yet to start",
+        status: status,
+      };
+    case "in-progress":
+      return {
+        text: "In progress",
+        status: status,
+      };
+    case "closed":
+      return {
+        text: "Ended",
+        status: status,
+      };
+    default:
+      return {
+        text: "Yet to start",
+        status: "not-started",
+      };
+  }
+});
 </script>
 
 <template>
-  <div class="flex flex-col r items-center h-full p-4 min-h-screen">
-    <div
-      class="max-w-xl shadow w-full border p-4 rounded flex flex-col gap-2"
-      v-if="getCurrentQuestionSet"
-    >
-      <h1 class="font-bold text-2xl">
-        {{ getCurrentQuestionSet?.category_name }}
-      </h1>
-      <p class="font-medium text-blue-500">
-        {{
-          quizSetStatus!.isStarted
-            ? "On going"
-            : quizSetStatus!.isYetToStart
-            ? "Yet to start"
-            : "Ended"
-        }}
+ 
+  <div class="flex flex-col items-center justify-start pt-8 min-h-screen">
+    <div class="bg-white border p-6 rounded-lg shadow-lg w-1/2" v-if="getCurrentQuestionSet">
+      <h2 class="text-2xl font-bold mb-4">Quiz Information</h2>
 
-        <!-- {{ quizSetStatus }} -->
-      </p>
-      <p class="font-medium text-blue-500">
-        Play date: &nbsp;
-        <strong class="font-bold text-xl">
+      <div class="mb-4 flex items-center gap-2">
+        <label class="font-bold">Title:</label>
+        <p class="font-medium text-lg">
+          {{ getCurrentQuestionSet!.category_name }}
+        </p>
+      </div>
+      <div class="mb-4 flex">
+        <label class="font-bold mr-2"> Start Time:</label>
+        <p>
           {{
-            combineDateAndTime(
-              getCurrentQuestionSet?.play_date!,
-              getCurrentQuestionSet?.start_time!
-            ).format("LLL")
+            moment(qSetStatus.getStartDate(getCurrentQuestionSet!)).format(
+              "LLL"
+            )
           }}
-        </strong>
-      </p>
-      <p class="font-medium text-blue-500">
-        End date: &nbsp;
-        <strong class="font-bold text-xl">
+        </p>
+      </div>
+      <div class="mb-4 flex gap-2">
+        <label class="font-bold mr-2"> End Time:</label>
+        <p>
           {{
-            combineDateAndTime(
-              getCurrentQuestionSet?.play_date!,
-              getCurrentQuestionSet?.end_time!
-            ).format("LLL")
+            moment(qSetStatus.getEndDate(getCurrentQuestionSet!)).format("LLL")
           }}
-        </strong>
-      </p>
-      <button
-        class="bg-blue-500 text-white rounded p-2"
-        @click="startQuiz"
-        v-if="startQuiz"
-      >
-        Start playing
-      </button>
+        </p>
+      </div>
+
+      <div class="mb-4">
+        <label class="font-bold mr-2"> Status:</label>
+        <span :class="qSetStatus.getBadgeColor(getCurrentQuestionSet!)">{{
+          qsetCurrentStatus.text
+        }}</span>
+      </div>
+
+      <div class="mb-4">
+        <button
+          @click="startQuiz"
+          type="button"
+          href="#"
+          class="bg-primary text-light px-4 py-2 rounded hover:bg-primary"
+          :disabled="qsetCurrentStatus.status !== 'in-progress'"
+          :class="qsetCurrentStatus.status !== 'in-progress' ? 'opacity-50 cursor-not-allowed' : ''"
+        >
+          Start Quiz
+        </button>
+      </div>
     </div>
   </div>
 </template>
