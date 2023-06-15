@@ -13,7 +13,7 @@ onMounted(() => {
     }
     // duplicate the data 6 times
     // data = data.concat(data, data, data, data, data);
-    console.log({ data });
+    // console.log({ data });
     quizStore.loadOrganizations(data);
   });
   quizStore.loadQuestions([]);

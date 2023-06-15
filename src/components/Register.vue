@@ -161,10 +161,11 @@ const handleSubmit = async (e: Event) => {
           //   await router.push({ name: "login" });
           // }, 2000);
         }
+        isLoading.value = false;
+        console.timeEnd("register");
       }
     );
-    isLoading.value = false;
-    console.timeEnd("register");
+   
   }
 };
 </script>

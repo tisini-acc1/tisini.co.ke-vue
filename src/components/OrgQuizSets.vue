@@ -18,7 +18,7 @@ const router = useRouter();
 const orgLength = computed(() => quizStore.organizations.length);
 const qsetId = router.currentRoute.value.params.qsetId as string;
 const orgId = router.currentRoute.value.query.orgId as string;
-console.log({ qsetId, orgId, orgLength, orgs: getOrganizations.value });
+// console.log({ qsetId, orgId, orgLength, orgs: getOrganizations.value });
 
 onBeforeMount(() => {
   if (quizStore.organizations.length === 0) {
@@ -29,7 +29,7 @@ onBeforeMount(() => {
       }
       // duplicate the data 6 times
       // data = data.concat(data, data, data, data, data);
-      console.log({ data });
+      // console.log({ data });
       quizStore.loadOrganizations(data ?? []);
     });
   }
@@ -49,12 +49,12 @@ watch(orgLength, (newVal, oldVal) => {
     const currentQset = currentOrg?.question_sets.find(
       (qset) => qset.uid === qsetId
     );
-    console.log({ currentOrg, currentQset });
+    // console.log({ currentOrg, currentQset });
     quizStore.setCurrentQuerySet(currentQset!);
   }
 });
 onMounted(() => {
-    console.log({ qsetId, orgId, orgLength, orgs: getOrganizations.value });
+    // console.log({ qsetId, orgId, orgLength, orgs: getOrganizations.value });
     const currentOrg = getOrganizations.value.find((org) => {
       // console.log({ orgId, org: org.uid });
       return org.uid === orgId;
@@ -64,7 +64,7 @@ onMounted(() => {
     const currentQset = currentOrg?.question_sets.find(
       (qset) => qset.uid === qsetId
     );
-    console.log({ currentOrg, currentQset });
+    // console.log({ currentOrg, currentQset });
     quizStore.setCurrentQuerySet(currentQset!);
 });
 const quizSetStatus = computed(() => {

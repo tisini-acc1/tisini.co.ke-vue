@@ -39,12 +39,13 @@ export const submitTisiniQuiz = async function (
 };
 
 export const getQuestionSetLeaderBoards = async function (
+  qsetId: string,
   cb?: (data: any, err: any) => void
 ) {
   return await tisiniRequestHandler<any, any>(
     {
       method: "GET",
-      url: `/quiz/question_sets/`,
+      url: `/quiz/question_sets/${qsetId}`,
       callback: cb,
     },
     {

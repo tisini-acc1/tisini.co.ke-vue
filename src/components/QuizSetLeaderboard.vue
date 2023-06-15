@@ -6,15 +6,17 @@ import { useRouter } from "vue-router";
 
 const router = useRouter();
 const qsets = ref<QuizSetLeaderBoardSummaryPayload[]>([]);
+const qsetId = ref<string>(router.currentRoute.value.params.qsetId as string);
 onMounted(() => {
-  getQuestionSetLeaderBoards((data: any, err: any) => {
+  getQuestionSetLeaderBoards(qsetId.value,(data: any, err: any) => {
     if (err) {
       console.log({ err });
     } else {
       console.log({ data });
-      qsets.value = (data as QuizSetLeaderBoardSummaryPayload[]).filter(
-        (qset) => qset.uid === router.currentRoute.value.params.qsetId
-      );
+      qsets.value = (data as QuizSetLeaderBoardSummaryPayload[])
+      // .filter(
+      //   (qset) => qset.uid === router.currentRoute.value.params.qsetId
+      // );
     }
   });
 });

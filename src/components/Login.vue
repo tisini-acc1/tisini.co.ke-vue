@@ -66,10 +66,10 @@ const handleSubmit = async (e: Event) => {
             type: "error",
           });
         } else {
-          console.log({ data });
+          // console.log({ data });
           const { tokens, ...profile } = data;
           const { access, refresh } = JSON.parse(tokens) as LoginTokenInterface;
-          console.log({ access, refresh, profile });
+          // console.log({ access, refresh, profile });
 
           setCookieToken({
             accessToken: access,

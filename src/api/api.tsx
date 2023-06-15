@@ -2,12 +2,10 @@ import { useAuthStore } from "@/store/useAuthStore";
 import axios from "axios";
 //   import router from "@/router";
 
-const { MODE } = import.meta.env;
+const { MODE, VITE_TISINI_API_PROD_URL, VITE_TISINI_API_DEV_URL } = import.meta.env;
 //   const isDev = MODE === "development";
 const baseURL =
-  MODE === "development"
-    ? "https://f28a-102-68-78-66.ngrok-free.app"
-    : "https://portal.tisini.co.ke";
+  MODE === "development" ? VITE_TISINI_API_DEV_URL : VITE_TISINI_API_PROD_URL;
 const authStore = useAuthStore();
 const pubTisiniApi = axios.create({
   baseURL: baseURL,
@@ -124,4 +122,3 @@ export { pubTisiniApi, privTisiniApi };
 //   export default privTisiniApi;
 
 export const wsURL = getWebSocketAddress(baseURL);
-console.log("wsURL", wsURL);

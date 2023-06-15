@@ -63,7 +63,7 @@ router.beforeEach((to, _from, next) => {
   // If the user is not authenticated, redirect to login page
   if (meta.requiresAuth && to.name !== "login") {
     // check the page before login and redirect to that page after login
-    return next({ name: "login", query: { redirect_next: to.fullPath } });
+    return next({ name: "login", query: { _redirect: to.fullPath } });
   }
 
   // If the route doesn't require authentication or the user is already on the login page, allow access

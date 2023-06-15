@@ -12,6 +12,11 @@ const quizRouter: RouteRecordRaw = {
     {
       path: "organizations",
       name: "organization-quiz",
+      meta: {
+        requiresAuth: true,
+        title: "Quiz set page",
+        roles: [],
+      } satisfies TisiniRouteMetaInterface,
       component: () =>
         import(/* webpackChunkName: "quiz-orgs" */ "@/components/QuizOrgs.vue"),
     },
