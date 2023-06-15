@@ -4,6 +4,7 @@ import { onMounted } from "vue";
 import { useQuizStore } from "@/store/useQuizStore";
 import OrganizationQuizCard from "@/components/OrgQuizCard.vue";
 import { getTisiniOrganizations } from "@/api/requests/base.jsx";
+import { qSetStatus } from "@/utils/QsetStatus";
 const quizStore = useQuizStore();
 onMounted(() => {
   getTisiniOrganizations((data: OrganizationInterface[], err: any) => {
@@ -14,7 +15,16 @@ onMounted(() => {
     // duplicate the data 6 times
     // data = data.concat(data, data, data, data, data);
     // console.log({ data });
-    quizStore.loadOrganizations(data);
+    // Sort based on priority 1,2,3 with 1 being the highest
+    const sorted =
+      Array.isArray(data) &&
+      data.length > 0 &&
+      data.sort((a, b) => {
+        const aPriority = qSetStatus.getPriority(a.question_sets[0]);
+        const bPriority = qSetStatus.getPriority(b.question_sets[0]);
+        return aPriority - bPriority;
+      });
+    quizStore.loadOrganizations(sorted as OrganizationInterface[]);
   });
   quizStore.loadQuestions([]);
 });
@@ -26,7 +36,7 @@ onMounted(() => {
     >
       <div
         v-for="org in quizStore.getOrganizations"
-        class="bg-white shadow overflow-hidden rounded sm:rounded-lg"
+        class="bg-white shadow overflow-hidden rounded sm:rounded-lg border hover:shadow-lg hover:scale-105 hover:border-transparent transition duration-300 ease-in-out"
       >
         <h1 class="p-2 font-bold uppercase">{{ org.organization_name }}</h1>
         <div class="w-full">
@@ -49,4 +59,5 @@ onMounted(() => {
       </div>
     </div>
   </main>
+ 
 </template>
