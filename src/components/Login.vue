@@ -19,7 +19,7 @@ const toast = useToast();
 const isLoading = ref<boolean>(false);
 const nextRoute = router.currentRoute.value.query._redirect
   ? (router.currentRoute.value.query._redirect as string)
-  : "/";
+  : null;
 const loginRules = {
   email: {
     required: helpers.withMessage("Email is required", required),
@@ -94,7 +94,7 @@ const handleSubmit = async (e: Event) => {
         }
         isLoading.value = false;
         console.timeEnd("login");
-        !err && (await router.push(nextRoute));
+        !err && (await router.push(nextRoute?nextRoute:"/"));
       }
     );
   }
@@ -229,7 +229,7 @@ const handleSubmit = async (e: Event) => {
                 >Don't have account?</span
               >
               <router-link
-                :to="{ name: 'register' }"
+                :to="{ name: 'register',query:{_redirect:nextRoute?nextRoute:'_none'} }"
                 class="text-xs ml-1 font-semibold text-primary-700"
                 >Sign up</router-link
               >

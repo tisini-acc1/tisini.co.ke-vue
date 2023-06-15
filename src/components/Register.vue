@@ -7,10 +7,14 @@ import { TisiniValidator } from "@/utils/tisiniValidator";
 import { ref } from "vue";
 // import { useRouter } from "vue-router";
 import { registerUserRequest } from "@/api/requests/auth-requests";
+import { useRouter } from "vue-router";
 // import { countries } from "@/data/countries";
 
 // const availableCountries = ref(countries);
-// const router = useRouter();
+const router = useRouter();
+const nextRoute = router.currentRoute.value.query._redirect
+  ? (router.currentRoute.value.query._redirect as string)
+  : null;
 const toast = useToast();
 const isLoading = ref<boolean>(false);
 // type SignUpStep = "personal" | "account";
@@ -382,8 +386,9 @@ const handleSubmit = async (e: Event) => {
                 >Already have account?</span
               >
               <router-link
-                :to="{ name: 'login' }"
+                :to="{ name: 'login',query:{_redirect:nextRoute} }"
                 class="text-xs ml-1 font-semibold text-primary-700"
+
                 >Sign in</router-link
               >
             </div>
