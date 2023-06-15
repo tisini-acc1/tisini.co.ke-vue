@@ -27,7 +27,7 @@ onBeforeMount(() => {
  */
 const quizStore = useQuizStore();
 const answer = ref<string>("");
-const timerId = ref<NodeJS.Timer | null>(null);
+const timerId = ref<any | null>(null);
 const questionTimer = ref<number>(getCurrentQuestion.value?.timer ?? 0);
 const timeDelay = ref<number>(1000);
 
