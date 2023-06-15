@@ -69,6 +69,9 @@ export const useQuizStore = defineStore("quizStore", {
     setCurrentQuerySet(qset: QuestionSetInterface) {
       // load single question set from the current organization
       this.currentQuestionSet = qset;
+      this.loadQuestions(qset.questions);
+      this.setCurreQuestionIndex(0);
+      this.currentQuestion = this.questions[this.currentQuestionIndex];
       this.scoreSummary = null;
       //   Set answers
       this.syncState();
@@ -90,8 +93,9 @@ export const useQuizStore = defineStore("quizStore", {
       this.currentOrganization = organization!;
     },
     moveTonextQuestion() {
-      this.currentQuestionIndex++;
+      this.setCurreQuestionIndex(this.currentQuestionIndex + 1);
       this.currentQuestion = this.questions[this.currentQuestionIndex];
+      this.currentAnswers = shuffleItems(this.currentQuestion?.answers ?? []);
       // move to the next question
     },
 
