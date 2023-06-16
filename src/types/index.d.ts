@@ -194,7 +194,6 @@ export interface SubmitQuizPayload {
   };
 }
 
-
 export interface QuizSetLeaderBoardSummaryPayload {
   uid: string;
   category_name: string;
@@ -204,9 +203,10 @@ export interface QuizSetLeaderBoardSummaryPayload {
 interface QsetPlayer {
   id: number;
   question_players: QsetPlayer2;
+  score?: number;
 }
 
-interface QsetPlayer2 {
+export interface QsetPlayer2 {
   id: number;
   q_player: QPlayer;
   points: number;
@@ -217,4 +217,5 @@ interface QPlayer {
   id: number;
   first_name: string;
   last_name: string;
+  profile_pic?: string | null;
 }
