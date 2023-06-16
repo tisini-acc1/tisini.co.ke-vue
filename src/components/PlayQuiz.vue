@@ -75,6 +75,11 @@ const startTimer = () => {
     quizStore.syncCurrentQuestionDuration(
       getCurrentQuestion.value?.timer! - questionTimer.value
     );
+    if(questionTimer.value === 0&&!getCurrentQuestion.value?.is_answered){
+      clearInterval(timerId.value!);
+      quizStore.timeoutQuestion();
+      // nextQuestion();
+    }
     if (questionTimer.value === 0 || getCurrentQuestion.value?.is_answered) {
       clearInterval(timerId.value!);
       //   quizStore.moveTonextQuestion();
