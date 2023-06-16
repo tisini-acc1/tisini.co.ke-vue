@@ -185,6 +185,21 @@ export const useQuizStore = defineStore("quizStore", {
       });
       // set the isPlaying to false
     },
+    timeoutQuestion() {
+      // timeout the question
+      this.currentQuestion!.is_answered = true;
+      this.currentQuestion!.duration = this.currentQuestion!.timer;
+      this.questions = this.questions.map((q) => {
+        if (q.uid === this.currentQuestion!.uid) {
+          q.is_answered = true;
+          q.duration = this.currentQuestion!.timer;
+          q.points = 0;
+        }
+        return q;
+      });
+      // set the current question answer
+    },
+
     resetState() {
       this.currentQuestionPlayer = null;
       this.counter = 0;
