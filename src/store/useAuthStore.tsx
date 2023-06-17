@@ -17,7 +17,10 @@ import jwtGetUserId from "@/utils/jwtGetUserId";
 //       refreshToken: "",
 //       isAuthenticated: false,
 //     } as unknown as AuthStateInterface);
-
+type StateTokenType = {
+  accessToken: string | null;
+  refreshToken: string | null;
+};
 export interface AuthStateInterfaceWithRouter extends AuthStateInterface {
   router: Router;
 }
@@ -49,6 +52,13 @@ export const useAuthStore = defineStore({
       const currentTime = new Date().getTime() / 1000;
       return tokenDecoded.exp! > currentTime;
     },
+    isAccessTokenValid: (state: AuthStateInterface) => {
+      const tokenDecoded = jwtDecode(
+        state.accessToken as string
+      ) as JwtPayload;
+      const currentTime = new Date().getTime() / 1000;
+      return tokenDecoded.exp! > currentTime;
+    },
     getUserId: (state: AuthStateInterface) => jwtGetUserId(state.accessToken!),
   },
   actions: {
@@ -63,13 +73,8 @@ export const useAuthStore = defineStore({
         JSON.stringify(this.$state)
       );
     },
-    updateTokens({
-      accessToken,
-      refreshToken,
-    }: {
-      refreshToken: string;
-      accessToken: string;
-    }) {
+
+    updateTokens({ accessToken, refreshToken }: StateTokenType) {
       this.refreshToken = refreshToken;
       this.accessToken = accessToken;
       localStorage.setItem(
