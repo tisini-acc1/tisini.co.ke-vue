@@ -45,7 +45,7 @@ export const getQuestionSetLeaderBoards = async function (
   return await tisiniRequestHandler<any, any>(
     {
       method: "GET",
-      url: `/quiz/question_sets/${qsetId}`,
+      url: `/quiz/quiz_leaderboard/${qsetId}`,
       callback: cb,
     },
     {
@@ -53,3 +53,19 @@ export const getQuestionSetLeaderBoards = async function (
     }
   );
 };
+
+export const getSingleOrganizationQuestionSets = async function (
+  orgId: string,
+  cb?: (data: any, err: any) => void
+) {
+  return await tisiniRequestHandler<any, any>(
+    {
+      method: "GET",
+      url: `/quiz/organizations/${orgId}`,
+      callback: cb,
+    },
+    {
+      type: "protected",
+    }
+  );
+}
