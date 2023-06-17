@@ -26,7 +26,7 @@ onMounted(() => {
     isLoading.value = true;
     getArticles((data: any, err: any) => {
       if (err) {
-        console.log({ err });
+        // console.log({ err });
         toast.error("Something went wrong", {
           position: "top-right",
         });
@@ -34,7 +34,7 @@ onMounted(() => {
         posts.value = articles;
         return;
       } else {
-        console.log({ data });
+        // console.log({ data });
         posts.value =
           (data as ArticleInterface[]).length > 0
             ? (data as ArticleInterface[])
