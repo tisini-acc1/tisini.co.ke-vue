@@ -50,6 +50,7 @@ onMounted(() => {
     <loader :is-loading="isLoading" />
     <div
       class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4"
+      v-if="quizStore.getOrganizations.length > 0"
     >
       <div
         v-for="org in quizStore.getOrganizations"
@@ -88,6 +89,9 @@ onMounted(() => {
           </ul>
         </div> -->
       </div>
+    </div>
+    <div v-else class="flex justify-center items-center h-screen">
+      <h1 class="text-2xl font-bold">No organizations found.</h1>
     </div>
   </main>
 </template>
