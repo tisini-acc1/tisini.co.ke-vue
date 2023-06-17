@@ -48,8 +48,8 @@ class QsetStatus {
     const endDateTime = moment(play_date + " " + end_time);
     const currentDateTime = moment();
 
-    if (status === "PL" || currentDateTime.isBefore(startDateTime)) {
-      return "not-started";
+    if (status === "PL") {
+      return "closed";
     }
 
     if (currentDateTime.isBetween(startDateTime, endDateTime)) {
