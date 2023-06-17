@@ -1,297 +1,55 @@
 <script setup lang="ts">
 import { useRouter } from "vue-router";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import { ArticleInterface } from "@/types";
+import { getArticles } from "@/api/requests/blogs";
+import { useToast } from "vue-toast-notification";
+import articles from "@/data/articles";
+import Loader from "@/components/Loader.vue";
+import he from "he";
+import stripHtmlTags from "@/utils/stripHtmlTags";
 const router = useRouter();
+const toast = useToast();
 const fImage = (id: number) => {
   return id
     ? `https://picsum.photos/id/${id}/600/600`
     : "https://picsum.photos/id/30/600/600";
 };
-const posts = ref<ArticleInterface[]>([
-  {
-    article_title: "Article Title",
-    featured_image: "https://picsum.photos/id/7/600/600",
-    excerpt:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    article_body:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    id: 1,
-    author: {
-      id: 1,
-      first_name: "John",
-      last_name: "Doe",
-      author_email: "some@gmail.com",
-    },
-    publish: "2021-09-09T12:00:00.000000Z",
-    tags: ["tag1", "tag2"],
-    is_editors_pick: true,
-    is_featured: true,
-    is_sponsored: true,
-    slug: "article-title",
-    article_category: {
-      id: 1,
-      article_category: "category1",
-    },
-  },
-  {
-    article_title: "Article Title",
-    featured_image: "https://picsum.photos/id/7/600/600",
-    excerpt:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    article_body:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    id: 1,
-    author: {
-      id: 1,
-      first_name: "John",
-      last_name: "Doe",
-      author_email: "some@gmail.com",
-    },
-    publish: "2021-09-09T12:00:00.000000Z",
-    tags: ["tag1", "tag2"],
-    is_editors_pick: true,
-    is_featured: true,
-    is_sponsored: true,
-    slug: "article-title",
-    article_category: {
-      id: 1,
-      article_category: "category1",
-    },
-  },
-  {
-    article_title: "Article Title",
-    featured_image: "https://picsum.photos/id/7/600/600",
-    excerpt:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    article_body:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    id: 1,
-    author: {
-      id: 1,
-      first_name: "John",
-      last_name: "Doe",
-      author_email: "some@gmail.com",
-    },
-    publish: "2021-09-09T12:00:00.000000Z",
-    tags: ["tag1", "tag2"],
-    is_editors_pick: true,
-    is_featured: true,
-    is_sponsored: true,
-    slug: "article-title",
-    article_category: {
-      id: 1,
-      article_category: "category1",
-    },
-  },
-  {
-    article_title: "Article Title",
-    featured_image: "https://picsum.photos/id/7/600/600",
-    excerpt:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    article_body:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    id: 1,
-    author: {
-      id: 1,
-      first_name: "John",
-      last_name: "Doe",
-      author_email: "some@gmail.com",
-    },
-    publish: "2021-09-09T12:00:00.000000Z",
-    tags: ["tag1", "tag2"],
-    is_editors_pick: true,
-    is_featured: true,
-    is_sponsored: true,
-    slug: "article-title",
-    article_category: {
-      id: 1,
-      article_category: "category1",
-    },
-  },
-  {
-    article_title: "Article Title",
-    featured_image: "https://picsum.photos/id/7/600/600",
-    excerpt:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    article_body:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    id: 1,
-    author: {
-      id: 1,
-      first_name: "John",
-      last_name: "Doe",
-      author_email: "some@gmail.com",
-    },
-    publish: "2021-09-09T12:00:00.000000Z",
-    tags: ["tag1", "tag2"],
-    is_editors_pick: true,
-    is_featured: true,
-    is_sponsored: true,
-    slug: "article-title",
-    article_category: {
-      id: 1,
-      article_category: "category1",
-    },
-  },
-  {
-    article_title: "Article Title",
-    featured_image: "https://picsum.photos/id/7/600/600",
-    excerpt:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    article_body:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    id: 1,
-    author: {
-      id: 1,
-      first_name: "John",
-      last_name: "Doe",
-      author_email: "some@gmail.com",
-    },
-    publish: "2021-09-09T12:00:00.000000Z",
-    tags: ["tag1", "tag2"],
-    is_editors_pick: true,
-    is_featured: true,
-    is_sponsored: true,
-    slug: "article-title",
-    article_category: {
-      id: 1,
-      article_category: "category1",
-    },
-  },
-  {
-    article_title: "Article Title",
-    featured_image: "https://picsum.photos/id/7/600/600",
-    excerpt:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    article_body:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    id: 1,
-    author: {
-      id: 1,
-      first_name: "John",
-      last_name: "Doe",
-      author_email: "some@gmail.com",
-    },
-    publish: "2021-09-09T12:00:00.000000Z",
-    tags: ["tag1", "tag2"],
-    is_editors_pick: true,
-    is_featured: true,
-    is_sponsored: true,
-    slug: "article-title",
-    article_category: {
-      id: 1,
-      article_category: "category1",
-    },
-  },
-  {
-    article_title: "Article Title",
-    featured_image: "https://picsum.photos/id/7/600/600",
-    excerpt:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    article_body:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    id: 1,
-    author: {
-      id: 1,
-      first_name: "John",
-      last_name: "Doe",
-      author_email: "some@gmail.com",
-    },
-    publish: "2021-09-09T12:00:00.000000Z",
-    tags: ["tag1", "tag2"],
-    is_editors_pick: true,
-    is_featured: true,
-    is_sponsored: true,
-    slug: "article-title",
-    article_category: {
-      id: 1,
-      article_category: "category1",
-    },
-  },
-  {
-    article_title: "Article Title",
-    featured_image: "https://picsum.photos/id/7/600/600",
-    excerpt:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    article_body:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    id: 1,
-    author: {
-      id: 1,
-      first_name: "John",
-      last_name: "Doe",
-      author_email: "some@gmail.com",
-    },
-    publish: "2021-09-09T12:00:00.000000Z",
-    tags: ["tag1", "tag2"],
-    is_editors_pick: true,
-    is_featured: true,
-    is_sponsored: true,
-    slug: "article-title",
-    article_category: {
-      id: 1,
-      article_category: "category1",
-    },
-  },
-  {
-    article_title: "Article Title",
-    featured_image: "https://picsum.photos/id/7/600/600",
-    excerpt:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    article_body:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    id: 1,
-    author: {
-      id: 1,
-      first_name: "John",
-      last_name: "Doe",
-      author_email: "some@gmail.com",
-    },
-    publish: "2021-09-09T12:00:00.000000Z",
-    tags: ["tag1", "tag2"],
-    is_editors_pick: true,
-    is_featured: true,
-    is_sponsored: true,
-    slug: "article-title",
-    article_category: {
-      id: 1,
-      article_category: "category1",
-    },
-  },
-  {
-    article_title: "Article Title",
-    featured_image: "https://picsum.photos/id/7/600/600",
-    excerpt:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    article_body:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.",
-    id: 1,
-    author: {
-      id: 1,
-      first_name: "John",
-      last_name: "Doe",
-      author_email: "some@gmail.com",
-    },
-    publish: "2021-09-09T12:00:00.000000Z",
-    tags: ["tag1", "tag2"],
-    is_editors_pick: true,
-    is_featured: true,
-    is_sponsored: true,
-    slug: "article-title",
-    article_category: {
-      id: 1,
-      article_category: "category1",
-    },
-  },
-]);
+const posts = ref<ArticleInterface[]>([]);
 const readMore = (id: number) => {
   router.push({ path: `/article/${id}` });
 };
+const isLoading = ref<boolean>(false);
+
+onMounted(() => {
+  const loadArticles = () => {
+    isLoading.value = true;
+    getArticles((data: any, err: any) => {
+      if (err) {
+        console.log({ err });
+        toast.error("Something went wrong", {
+          position: "top-right",
+        });
+        isLoading.value = false;
+        posts.value = articles;
+        return;
+      } else {
+        console.log({ data });
+        posts.value =
+          (data as ArticleInterface[]).length > 0
+            ? (data as ArticleInterface[])
+            : articles;
+      }
+      isLoading.value = false;
+    });
+  };
+  Promise.allSettled([loadArticles()]);
+});
 </script>
 
 <template>
   <div class="grid lg:grid-cols-3 sm:grid-cols-2 gap-2 p-2">
+    <Loader :is-loading="isLoading" />
     <div v-for="(article, index) in posts" :key="article.id" class="p-2">
       <div class="flex flex-col rounded-lg overflow-hidden shadow-lg">
         <img
@@ -306,7 +64,7 @@ const readMore = (id: number) => {
             {{ article.article_title }}
           </h2>
           <h1 class="title-font text-lg font-medium text-gray-900 mb-3">
-            {{ article.excerpt }}
+            {{ stripHtmlTags(article.excerpt!) }}
           </h1>
           <!-- <p class="leading-relaxed">{{ article.article_body }}</p> -->
           <a
