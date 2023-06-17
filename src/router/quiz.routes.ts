@@ -24,8 +24,8 @@ const quizRouter: RouteRecordRaw = {
      * Quizset
      */
     {
-      path: "organizations/:qsetId/quizsets",
-      name: "organization-quizsets",
+      path: "organizations/:qsetId/quiz-set-to-play",
+      name: "quiz-set-to-play",
       meta: {
         requiresAuth: true,
         title: "Quiz set page",
@@ -33,7 +33,23 @@ const quizRouter: RouteRecordRaw = {
       } satisfies TisiniRouteMetaInterface,
       component: () =>
         import(
-          /* webpackChunkName: "organization-quizsets" */ "@/components/OrgQuizSets.vue"
+          /* webpackChunkName: "quiz-set-to-play" */ "@/components/SelectQuestionSetToPlay.vue"
+        ),
+    },
+    /**
+     * Org Quizsets
+     */
+    {
+      path: "organizations/:orgId/quizsets",
+      name: "org-quizsets",
+      meta: {
+        requiresAuth: true,
+        title: "Quiz set page",
+        roles: [],
+      } satisfies TisiniRouteMetaInterface,
+      component: () =>
+        import(
+          /* webpackChunkName: "org-quizsets" */ "@/components/OrganizationQuizSets.vue"
         ),
     },
     /**
