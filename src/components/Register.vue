@@ -338,7 +338,7 @@ const handleSubmit = async (e: Event) => {
                   :disabled="isLoading"
                   :class="[{ 'opacity-50 cursor-not-allowed': isLoading }]"
                   type="submit"
-                  class="w-full block text-center text-white bg-primary-500 hover:bg-bg-primary px-2 py-1.5 rounded-md">
+                  class="w-full block text-center text-white bg-primary hover:bg-bg-primary px-2 py-1.5 rounded-md">
                   <span
                     v-if="isLoading"
                     class="flex items-center justify-center gap-2">
