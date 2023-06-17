@@ -19,6 +19,7 @@ onMounted(() => {
         toast.open({
           message: "Something went wrong. Please try again later.",
           type: "error",
+          position: "top-right",
         });
         //
         isLoading.value = false;
@@ -28,15 +29,15 @@ onMounted(() => {
       // data = data.concat(data, data, data, data, data);
       // console.log({ data });
       // Sort based on priority 1,2,3 with 1 being the highest
-      const sorted =
-        Array.isArray(data) &&
-        data.length > 0 &&
-        data.sort((a, b) => {
-          const aPriority = qSetStatus.getPriority(a.question_sets[0]);
-          const bPriority = qSetStatus.getPriority(b.question_sets[0]);
-          return aPriority - bPriority;
-        });
-      quizStore.loadOrganizations(sorted as OrganizationInterface[]);
+      // const sorted =
+      //   Array.isArray(data) &&
+      //   data.length > 0 &&
+      //   data.sort((a, b) => {
+      //     const aPriority = qSetStatus.getPriority(a.question_sets[0]);
+      //     const bPriority = qSetStatus.getPriority(b.question_sets[0]);
+      //     return aPriority - bPriority;
+      //   });
+      quizStore.loadOrganizations(data as OrganizationInterface[]);
       isLoading.value = false;
     });
     quizStore.loadQuestions([]);
@@ -46,7 +47,7 @@ onMounted(() => {
 </script>
 <template>
   <main class="w-full min-h-screen">
-    <loader :is-loading="isLoading"/>
+    <loader :is-loading="isLoading" />
     <div
       class="p-4 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 md:gap-4"
     >
@@ -54,7 +55,6 @@ onMounted(() => {
         v-for="org in quizStore.getOrganizations"
         class="bg-white shadow overflow-hidden rounded sm:rounded-lg border hover:shadow-lg hover:border-transparent transition duration-300 ease-in-out"
       >
-        <h1 class="p-2 font-bold uppercase">{{ org.organization_name }}</h1>
         <div class="w-full">
           <img
             :src="org.org_logo!"
@@ -62,7 +62,22 @@ onMounted(() => {
             class="w-full h-60 object-fill top-0 left-0"
           />
         </div>
-        <div class="p-4 border-t">
+        <div class="p-2 flex flex-col gap-2">
+          <h1 class="p-2 font-bold uppercase">
+            {{ org.organization_name }} organization
+          </h1>
+          <p>Click on the link below to view active quiz available for play.</p>
+          <router-link
+            :to="{
+              name: 'org-quizsets',
+              params: { orgId: org.uid },
+            }"
+            class="p-2 bg-primary text-white rounded text-center"
+          >
+            Active quizes
+          </router-link>
+        </div>
+        <!-- <div class="p-4 border-t">
           <ul>
             <organization-quiz-card
               v-for="qset in org.question_sets"
@@ -71,7 +86,7 @@ onMounted(() => {
               :qset="qset"
             />
           </ul>
-        </div>
+        </div> -->
       </div>
     </div>
   </main>
