@@ -25,11 +25,12 @@ export const submitTisiniQuiz = async function (
   data: SubmitQuizPayload,
   cb?: (data: any, err: any) => void
 ) {
+  const {...rest} = data.question_players;
   return await tisiniRequestHandler<any, any>(
     {
       method: "POST",
-      url: `/quiz/question_sets/${qsetId}/leaderboard/`,
-      data: data as any,
+      url: `/quiz/quiz_leaderboard/${qsetId}/leaderboard/`,
+      data: rest as any,
       callback: cb,
     },
     {
