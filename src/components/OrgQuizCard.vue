@@ -72,15 +72,15 @@ const progressTime = (type: "start" | "end"): TimeLeft => {
   };
 
   if (remainingTime.value.asSeconds() < 0) {
-    return  timeLeft
-  
+    return timeLeft
+
   }
   if (remainingTime.value.asSeconds() > 0) {
     return timeLeft
 
   }
   return timeLeft
-  
+
 };
 
 </script>
@@ -91,70 +91,57 @@ const progressTime = (type: "start" | "end"): TimeLeft => {
       <h1 class="font-bold">{{ qset.category_name }}</h1>
       <!-- Badge -->
       <div>
-        <span
-          v-if="qSetStatus.getStatus(qset) === 'not-started'"
-          :class="[qSetStatus.getBadgeColor(qset)]"
-        >
+        <span v-if="qSetStatus.getStatus(qset) === 'not-started'" :class="[qSetStatus.getBadgeColor(qset)]">
           Not started
         </span>
-        <span
-          v-if="qSetStatus.getStatus(qset) === 'in-progress'"
-          :class="[qSetStatus.getBadgeColor(qset)]"
-        >
+        <span v-if="qSetStatus.getStatus(qset) === 'in-progress'" :class="[qSetStatus.getBadgeColor(qset)]">
           In progress
         </span>
-        <span
-          v-if="qSetStatus.getStatus(qset) === 'closed'"
-          :class="[qSetStatus.getBadgeColor(qset)]"
-        >
+        <span v-if="qSetStatus.getStatus(qset) === 'closed'" :class="[qSetStatus.getBadgeColor(qset)]">
           Closed
         </span>
       </div>
     </div>
-    <div
-      v-if="qSetStatus.getStatus(qset) === 'not-started'"
-      class="flex flex-col gap-1"
-    >
+    <div v-if="qSetStatus.getStatus(qset) === 'not-started'" class="flex flex-col gap-1">
       <div></div>
       <p class="text-center">
         <span class=""> Will open in</span>
-        <h1 class="tracking-wider font-mono font-bold text-lg">
-          {{ progressTime("start").hours }}:{{
+      <h1 class="tracking-wider font-mono font-bold text-lg">
+        {{ progressTime("start").hours }}:{{
           progressTime("start").minutes
         }}:{{ progressTime("start").seconds }}
-        </h1>
-       
+      </h1>
+
       </p>
     </div>
-    <div
-      v-if="qSetStatus.getStatus(qset) === 'in-progress'"
-      class="flex flex-col gap-1"
-    >
-    <p class="text-center">
-      <span class=""> Will close in</span>
+    <div v-if="qSetStatus.getStatus(qset) === 'in-progress'" class="flex flex-col gap-1">
+      <p class="text-center">
+        <span class=""> Will close in</span>
       <h1 class="tracking-wider font-mono font-bold text-lg">
         {{ progressTime("end").hours }}:{{
           progressTime("end").minutes
         }}:{{ progressTime("end").seconds }}
-        </h1>
-        
+      </h1>
+
       </p>
       <div>
-        <router-link
-          type="button"
+        <router-link type="button"
           class="text-white bg-green-800 font-medium uppercase w-full text-center px-2 py-1 rounded border"
-          :to="{name:'organization-quizsets', query:{queryCategory:qset.category_name, orgId:orgId, qStatus:qSetStatus.getStatus(qset)}, params:{qsetId:qset.uid}}"
-        >
+          :to="{ name: 'quiz-set-to-play', query: { queryCategory: qset.category_name, orgId: orgId, qStatus: qSetStatus.getStatus(qset) }, params: { qsetId: qset.uid } }">
           Start Quiz
         </router-link>
       </div>
-      
+
     </div>
-    <div
-      v-if="qSetStatus.getStatus(qset) === 'closed'"
-      class="flex flex-col gap-1"
-    >
+    <div v-if="qSetStatus.getStatus(qset) === 'closed'" class="flex flex-col gap-1">
       <h1 class="text-red-500 font-bold text-center py-4 uppercase">Quiz Closed</h1>
+    </div>
+    <div>
+      <router-link type="button"
+        class="text-white bg-primary font-medium capitalize w-full text-center px-2 py-1 rounded border"
+        :to="{ name: 'quizset-leaderboard', params: { qsetId: qset.uid } }">
+        leaderboard
+      </router-link>
     </div>
   </li>
 </template>
