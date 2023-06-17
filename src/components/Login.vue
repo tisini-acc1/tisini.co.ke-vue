@@ -57,7 +57,7 @@ const handleSubmit = async (e: Event) => {
       formData.value,
       async (data: LoginUserResponseInterface, err: any) => {
         if (err instanceof AxiosError) {
-          console.log({ err: err.response?.data });
+          // console.log({ err: err.response?.data });
 
           toast.error(err.response?.data.detail, {
             position: "top-right",
