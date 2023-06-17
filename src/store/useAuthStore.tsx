@@ -5,6 +5,7 @@ import { Router } from "vue-router";
 import { defineStore } from "pinia";
 import { stateKeys } from "@/constants/state-keys";
 import { removeToken } from "@/services/cookieService";
+import jwtGetUserId from "@/utils/jwtGetUserId";
 
 // const initialState: AuthStateInterface = JSON.parse(
 //   localStorage.getItem(stateKeys["tisini-app-authState"])!
@@ -48,6 +49,7 @@ export const useAuthStore = defineStore({
       const currentTime = new Date().getTime() / 1000;
       return tokenDecoded.exp! > currentTime;
     },
+    getUserId: (state: AuthStateInterface) => jwtGetUserId(state.accessToken!),
   },
   actions: {
     async loginUser(payload: AuthStateInterface) {
