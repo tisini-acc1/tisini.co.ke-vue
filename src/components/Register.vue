@@ -113,7 +113,7 @@ const handleSubmit = async (e: Event) => {
             pauseOnHover: true,
             type: "success",
           });
-          console.log(data);
+          // console.log(data);
 
           setTimeout(async () => {
             await router.push({ name: "login" });
