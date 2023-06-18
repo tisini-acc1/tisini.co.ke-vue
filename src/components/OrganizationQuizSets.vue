@@ -19,14 +19,14 @@ onMounted(() => {
     isLoading.value = true;
     getSingleOrganizationQuestionSets(orgId, (data: any, err: any) => {
       if (err) {
-        console.log({ err });
+        // console.log({ err });
         toast.error("Something went wrong!", {
           position: "top-right",
         });
         isLoading.value = false;
         return;
       } else {
-        console.log({ data });
+        // console.log({ data });
         const org = data as OrganizationInterface;
         org.question_sets = org.question_sets.filter(
           (qset) => qset.status !== "PL"
