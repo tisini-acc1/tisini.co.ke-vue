@@ -117,7 +117,7 @@ const handleSubmit = async (e: Event) => {
 
           setTimeout(async () => {
             await router.push({ name: "login" });
-          }, 2000);
+          }, 100);
         }
         isLoading.value = false;
         console.timeEnd("register");
