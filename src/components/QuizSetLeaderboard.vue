@@ -51,7 +51,7 @@ onMounted(() => {
         });
         return;
       } else {
-        console.log({ data });
+        // console.log({ data });
         const lboard = data as QuizSetLeaderBoardSummaryPayload;
         if (lboard.question_players && lboard.question_players.length === 0) {
           leaderBoard.value = lboard;
