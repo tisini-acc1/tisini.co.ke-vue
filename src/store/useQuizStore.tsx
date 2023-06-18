@@ -176,13 +176,8 @@ export const useQuizStore = defineStore("quizStore", {
       };
       // console.log("scoreSummary", this.scoreSummary);
       this.syncState();
-      await router.push({
-        name: "completed-quiz",
-        params: {
-          orgId: this.currentOrganization?.uid,
-          qsetId: this.currentQuestionSet?.uid,
-        },
-      });
+      console.log('Score summary --- completed');
+      
       // set the isPlaying to false
     },
     timeoutQuestion() {
