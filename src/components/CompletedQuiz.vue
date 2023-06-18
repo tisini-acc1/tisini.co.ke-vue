@@ -4,10 +4,12 @@ import { ref } from "vue";
 import { useQuizStore } from "@/store/useQuizStore";
 import { submitTisiniQuiz } from "@/api/requests/base";
 import Loader from "@/components/Loader.vue";
+import { useToast } from "vue-toast-notification";
 
 const { getScoreSummary } = storeToRefs(useQuizStore());
 const quizStore = useQuizStore();
 const quizSubmitted = ref(false);
+const toast = useToast();
 const isLoading = ref(false);
 const submitQuiz = () => {
   isLoading.value = true;
@@ -25,10 +27,13 @@ const submitQuiz = () => {
     },
     (data: any, err: any) => {
       if (err) {
-        console.log({ err });
+        // console.log({ err });
+        toast.error("Something went wrong submitting results", {
+          position: "top-right",
+        });
         isLoading.value = false;
       } else {
-        console.log({ data });
+        // console.log({ data });
         quizSubmitted.value = true;
         quizStore.resetState()
         isLoading.value = false;
