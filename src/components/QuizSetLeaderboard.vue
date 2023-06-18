@@ -17,6 +17,9 @@ const baseGravatar = ref<string>(
 );
 const qsetId = ref<string>(router.currentRoute.value.params.qsetId as string);
 const computeScore = (player: QsetPlayer2) => {
+  if (!player || !player.points || !player.timer) {
+    return 0;
+  }
   const points = player.points;
   const timer = player.timer;
   const score = points - timer;
@@ -40,7 +43,7 @@ onMounted(() => {
     isLoading.value = true;
     getQuestionSetLeaderBoards(qsetId.value, (data: any, err: any) => {
       if (err) {
-        console.log({ err });
+        // console.log({ err });
 
         isLoading.value = false;
         toast.error("Something went wrong", {
@@ -48,7 +51,7 @@ onMounted(() => {
         });
         return;
       } else {
-        console.log({ data });
+        // console.log({ data });
         const lboard = data as QuizSetLeaderBoardSummaryPayload;
         if (lboard.question_players && lboard.question_players.length === 0) {
           leaderBoard.value = lboard;
@@ -191,16 +194,16 @@ onMounted(() => {
           No participants yet
         </h3>
         <p class="mt-1 text-sm text-gray-500">
-          Invite your friends to join the quiz
+          <!-- Invite your friends to join the quiz -->
         </p>
         <div class="mt-6 flex gap-2">
-          <button
+          <!-- <button
             @click="router.push(`/quiz/${qsetId}/invite`)"
             type="button"
             class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
           >
             Invite
-          </button>
+          </button> -->
           <!-- Go back -->
           <button
             @click="router.back()"
@@ -209,7 +212,6 @@ onMounted(() => {
           >
             Go back
           </button>
-          
         </div>
       </div>
     </div>
