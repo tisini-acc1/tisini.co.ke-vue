@@ -202,16 +202,12 @@ export interface QuizSetLeaderBoardSummaryPayload {
 
 interface QsetPlayer {
   id: number;
-  question_players: QsetPlayer2;
-  score?: number;
-}
-
-export interface QsetPlayer2 {
-  id: number;
   q_player: QPlayer;
   points: number;
   timer: number;
+  score?: number;
 }
+
 
 interface QPlayer {
   id: number;
