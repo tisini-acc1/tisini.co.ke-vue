@@ -8,6 +8,7 @@ import { ref } from "vue";
 // import { useRouter } from "vue-router";
 import { registerUserRequest } from "@/api/requests/auth-requests";
 import { useRouter } from "vue-router";
+import Loader from "./Loader.vue";
 // import { countries } from "@/data/countries";
 
 // const availableCountries = ref(countries);
@@ -42,22 +43,6 @@ const rules = {
       "Password must be at least 6 characters",
       minLength(6)
     ),
-    // lowercase: helpers.withMessage(
-    //   "Password must contain at least one lowercase letter",
-    //   TisiniValidator.passwordLowercase
-    // ),
-    // uppercase: helpers.withMessage(
-    //   "Password must contain at least one uppercase letter",
-    //   TisiniValidator.passwordUppercase
-    // ),
-    // number: helpers.withMessage(
-    //   "Password must contain at least one number",
-    //   TisiniValidator.passwordNumbers
-    // ),
-    // special: helpers.withMessage(
-    //   "Password must contain at least one special character (e.g. !@#$%^&*)",
-    //   TisiniValidator.passwordSpecialCharacters
-    // ),
   },
   phone_number: {
     required: helpers.withMessage("Phone number is required", required),
@@ -103,38 +88,7 @@ const handleSubmit = async (e: Event) => {
       type: "error",
     });
   } else {
-    // try {
-    //   isLoading.value = true;
-    //   await publicAuriginAfricaRequest.post("/auth/register/", formData.value);
 
-    //   toast.success("Account created successfully", {
-    //     position: "top-right",
-    //     duration: 10000,
-    //     pauseOnHover: true,
-    //     type: "success",
-    //   });
-    //   setTimeout(async () => {
-    //     await router.push({ name: "login" });
-    //   }, 2000);
-    // } catch (error: any) {
-    //   if (error instanceof AxiosError) {
-    //     const { detail } = error.response!.data as any;
-    //     let msg = "";
-    //     // if (Array.isArray(errors)) {
-    //     //   errors.forEach((err: any) => {
-    //     //     msg += err !== "" ? err + " " : "";
-    //     //   });
-    //     // }
-    //     toast.error(detail, {
-    //       position: "top-right",
-    //       duration: 5000,
-    //       pauseOnHover: true,
-    //       type: "error",
-    //     });
-    //   }
-    // } finally {
-    //   isLoading.value = false;
-    // }
     isLoading.value = true;
     console.time("register");
     registerUserRequest(
@@ -161,9 +115,9 @@ const handleSubmit = async (e: Event) => {
           });
           console.log(data);
 
-          // setTimeout(async () => {
-          //   await router.push({ name: "login" });
-          // }, 2000);
+          setTimeout(async () => {
+            await router.push({ name: "login" });
+          }, 2000);
         }
         isLoading.value = false;
         console.timeEnd("register");
@@ -178,6 +132,7 @@ const handleSubmit = async (e: Event) => {
   <main
     class="min-h-screen bg-no-repeat bg-cover bg-center bg-blend-overlay flex flex-col justify-center items-center">
     <!-- component -->
+    <loader :is-loading="isLoading" />
     <!-- Container -->
     <div
       class="flex flex-wrap min-h-screen w-full content-center justify-center py-10 px-4">
