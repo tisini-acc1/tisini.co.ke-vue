@@ -2,6 +2,9 @@
 import { storeToRefs } from "pinia";
 import useQuizStore from "@/store/useQuizStore";
 import { ref, onMounted, watch, onBeforeMount } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 const {
   getCurrentQuestionSet,
   getCurrentQuestion,
@@ -75,7 +78,7 @@ const startTimer = () => {
     quizStore.syncCurrentQuestionDuration(
       getCurrentQuestion.value?.timer! - questionTimer.value
     );
-    if(questionTimer.value === 0&&!getCurrentQuestion.value?.is_answered){
+    if (questionTimer.value === 0 && !getCurrentQuestion.value?.is_answered) {
       clearInterval(timerId.value!);
       quizStore.timeoutQuestion();
       // nextQuestion();
@@ -88,6 +91,13 @@ const startTimer = () => {
 };
 const submitQuiz = async () => {
   await quizStore.finishQuiz();
+  await router.push({
+    name: "completed-quiz",
+    params: {
+      orgId: quizStore.currentOrganization?.uid,
+      qsetId: quizStore.currentQuestionSet?.uid,
+    },
+  });
 };
 </script>
 
