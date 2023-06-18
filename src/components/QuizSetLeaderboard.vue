@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { QsetPlayer2, QuizSetLeaderBoardSummaryPayload } from "@/types";
+import { QuizSetLeaderBoardSummaryPayload ,QsetPlayer} from "@/types";
 import { ref, onMounted, computed } from "vue";
 import { getQuestionSetLeaderBoards } from "@/api/requests/base";
 import { useRouter } from "vue-router";
@@ -16,7 +16,7 @@ const baseGravatar = ref<string>(
   "https://gravatar.com/avatar/cc8cbfcbd5bc4908182252d212020d52?d=mp"
 );
 const qsetId = ref<string>(router.currentRoute.value.params.qsetId as string);
-const computeScore = (player: QsetPlayer2) => {
+const computeScore = (player: QsetPlayer) => {
   if (!player || !player.points || !player.timer) {
     return 0;
   }
@@ -51,7 +51,7 @@ onMounted(() => {
         });
         return;
       } else {
-        // console.log({ data });
+        console.log({ data });
         const lboard = data as QuizSetLeaderBoardSummaryPayload;
         if (lboard.question_players && lboard.question_players.length === 0) {
           leaderBoard.value = lboard;
@@ -61,9 +61,9 @@ onMounted(() => {
         lboard.question_players =
           lboard.question_players && Array.isArray(lboard.question_players)
             ? lboard.question_players.map((player) => {
-                player.score = computeScore(player.question_players);
-                player.question_players.q_player.profile_pic =
-                  player.question_players.q_player.profile_pic ??
+                player.score = computeScore(player);
+                player.q_player.profile_pic =
+                  player.q_player.profile_pic ??
                   baseGravatar.value;
                 return player;
               })
@@ -153,19 +153,19 @@ onMounted(() => {
                 </div> -->
                 <div class="ml-4 flex gap-1">
                   <div class="text-sm font-medium text-gray-900">
-                    {{ player.question_players.q_player.first_name }}
+                    {{ player.q_player.first_name }}
 
-                    {{ player.question_players.q_player.last_name }}
+                    {{ player.q_player.last_name }}
                   </div>
                 </div>
               </div>
             </div>
           </td>
           <td class="px-6 py-4 whitespace-nowrap border">
-            {{ player.question_players.points }}
+            {{ player.points }}
           </td>
           <td class="px-6 py-4 whitespace-nowrap border">
-            {{ player.question_players.timer }}
+            {{ player.timer }}
           </td>
           <!-- <td class="px-6 py-4 whitespace-nowrap border">
             {{ player.score }}
