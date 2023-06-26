@@ -63,7 +63,7 @@ onMounted(() => {
       </h1>
     </div>
     <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-2">
-      <div v-if="organization && organization.question_sets.length === 0" v-for="questionset in organization!.question_sets"
+      <div v-if="organization && organization.question_sets.length > 0" v-for="questionset in organization!.question_sets"
         :key="questionset.uid"
         class="bg-white shadow overflow-hidden rounded sm:rounded-lg border hover:shadow-lg hover:border-transparent transition duration-300 ease-in-out">
         <div class="w-full">
