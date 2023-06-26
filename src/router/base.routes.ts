@@ -46,6 +46,14 @@ const baseRouter: RouteRecordRaw = {
         }
       },
     },
+    // blogs
+    {
+      path: "/blogs/articles/:slug",
+      name: "single-blog",
+      component: () =>
+        import(/* webpackChunkName: "blog" */ "@/components/SinglePost.vue"),
+
+    },
 
     /**
      * This route is used to activate the user's account

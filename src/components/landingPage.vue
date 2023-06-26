@@ -67,9 +67,8 @@ onMounted(() => {
             {{ stripHtmlTags(article.excerpt!) }}
           </h1>
           <!-- <p class="leading-relaxed">{{ article.article_body }}</p> -->
-          <a
+          <router-link :to="{name:'single-blog',params:{slug:article.slug}}"
             class="flex items-center mt-2 text-blue-500"
-            @click="readMore(article.id)"
           >
             Read More
             <span class="w-4 h-4 ml-2">
@@ -87,7 +86,7 @@ onMounted(() => {
                 ></path>
               </svg>
             </span>
-          </a>
+          </router-link>
         </div>
       </div>
     </div>
