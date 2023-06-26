@@ -45,30 +45,17 @@ onMounted(() => {
     <!-- <h1>Organization Quiz Sets {{ orgId }}</h1> -->
     <div class="flex items-center py-2 border-b my-2">
       <!-- Go back -->
-      <button
-        class="flex items-center justify-center w-10 h-10 mr-2 text-gray-600 rounded-full hover:bg-gray-200"
-        @click="router.back()"
-      >
-        <svg
-          class="w-6 h-6"
-          fill="none"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
+      <button class="flex items-center justify-center w-10 h-10 mr-2 text-gray-600 rounded-full hover:bg-gray-200"
+        @click="router.back()">
+        <svg class="w-6 h-6" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          stroke="currentColor" viewBox="0 0 24 24">
           <path d="M15 19l-7-7 7-7"></path>
         </svg>
         <span class="sr-only">Back</span>
       </button>
       <!-- Organization Logo -->
-      <img
-        v-if="organization?.org_logo"
-        :src="organization?.org_logo"
-        alt=""
-        class="w-10 h-10 rounded-full object-contain"
-      />
+      <img v-if="organization?.org_logo" :src="organization?.org_logo" alt=""
+        class="w-10 h-10 rounded-full object-contain" />
       <!-- Organization Name -->
 
       <h1 class="text-2xl font-bold text-gray-800">
@@ -76,18 +63,11 @@ onMounted(() => {
       </h1>
     </div>
     <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-2">
-      <div
-        v-if="organization"
-        v-for="questionset in organization!.question_sets"
+      <div v-if="organization && organization.question_sets.length === 0" v-for="questionset in organization!.question_sets"
         :key="questionset.uid"
-        class="bg-white shadow overflow-hidden rounded sm:rounded-lg border hover:shadow-lg hover:border-transparent transition duration-300 ease-in-out"
-      >
+        class="bg-white shadow overflow-hidden rounded sm:rounded-lg border hover:shadow-lg hover:border-transparent transition duration-300 ease-in-out">
         <div class="w-full">
-          <img
-            :src="organization?.org_logo!"
-            alt=""
-            class="w-full h-60 object-fill top-0 left-0"
-          />
+          <img :src="organization?.org_logo!" alt="" class="w-full h-60 object-fill top-0 left-0" />
         </div>
 
         <div class="p-4 border-t">
@@ -95,6 +75,13 @@ onMounted(() => {
             <org-quiz-card :org-id="organization!.uid" :qset="questionset" />
           </ul>
         </div>
+      </div>
+      <!-- no questionsets -->
+      <div v-if="organization && organization.question_sets.length === 0"
+        class="bg-white p-2 text-primary font-bold text-lg overflow-hidden  s hover:border-transparent transition duration-300 ease-in-out">
+        <h1>
+          No Quiz Sets available
+        </h1>
       </div>
     </div>
   </div>
