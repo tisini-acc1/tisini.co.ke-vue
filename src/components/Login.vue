@@ -141,7 +141,7 @@ const handleSubmit = async (e: Event) => {
                 <input
                   type="tel"
                   v-model="formData.phone_number"
-                  placeholder="Enter your phone number"
+                  placeholder="0700 000 000"
                   autocomplete="tel-national"
                   class="block w-full rounded-md border border-gray-300 focus:border-primary-700 focus:outline-none focus:ring-1 focus:ring-primary-700 py-1 px-1.5 text-gray-500" />
                 <p v-if="$v.phone_number.$error" class="text-sm text-red-400">
