@@ -226,8 +226,8 @@ const handleSubmit = async (e: Event) => {
                   type="text"
                   placeholder="+254 000 000 0000"
                   autocomplete="tel"
-                  maxlength="13"
-                  minlength="13"
+                  maxlength="10"
+                  minlength="10"
                   aria-autocomplete="both" />
                 <ul class="error">
                   <li v-for="err in $v.phone_number.$errors">
