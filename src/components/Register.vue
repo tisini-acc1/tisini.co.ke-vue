@@ -69,7 +69,7 @@ const formData = ref<SignupUserInterface>({
   email: "",
   last_name: "",
   first_name: "",
-  phone_number: "+254",
+  phone_number: "",
   is_author: false,
   is_quiz_admin: false,
 });
@@ -224,7 +224,7 @@ const handleSubmit = async (e: Event) => {
                   class="input"
                   id="grid-username"
                   type="text"
-                  placeholder="+254 000 000 0000"
+                  placeholder="0700 000 000"
                   autocomplete="tel"
                   maxlength="10"
                   minlength="10"
