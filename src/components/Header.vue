@@ -14,14 +14,14 @@ const { isAuthenticated } = storeToRefs(useAuthStore());
         >
       </div>
       <div class="flex items-center justify-evenly gap-4">
-        <ul class="flex items-center gap-2 uppercase">
+        <ul class="flex items-center gap-4 capitalize">
           <li>
-            <router-link :to="{ name: 'organization-quiz' }" class="text-white"
+            <router-link :to="{ name: 'organization-quiz' }" class="text-white hover:text-gray-200 font-bold hover:border-b"
               >Quiz</router-link
             >
           </li><li>
-            <router-link :to="{ name: 'organization-quiz' }" class="text-white"
-              >Live score</router-link
+            <a href="http://team.tisini.co.ke/live/" class="text-white hover:text-gray-200 font-bold hover:border-b" target="_blank"
+              >Live score</a
             >
           </li>
         </ul>
