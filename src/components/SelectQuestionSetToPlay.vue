@@ -136,7 +136,6 @@ const qsetCurrentStatus = computed(() => {
 </script>
 
 <template>
- 
   <div class="flex flex-col items-center justify-start pt-8 min-h-screen">
     <div class="bg-white border p-6 rounded-lg shadow-lg w-1/2" v-if="getCurrentQuestionSet">
       <h2 class="text-2xl font-bold mb-4">Quiz Information</h2>
@@ -146,6 +145,22 @@ const qsetCurrentStatus = computed(() => {
         <p class="font-medium text-lg">
           {{ getCurrentQuestionSet!.category_name }}
         </p>
+        </div>
+        <!-- amount payable -->
+
+        <div class="flex items-center mb-4 gap-2">
+          <label class="font-bold">Amount payable:</label>
+          <p >
+            {{ getCurrentQuestionSet!.amount_payable }}
+          </p>
+        </div>
+
+        <!-- prize won -->
+        <div class="flex items-center mb-4 gap-2 block">
+          <label class="font-bold">Prize:</label>
+          <p>
+            {{ getCurrentQuestionSet!.prize_won ? getCurrentQuestionSet.prize_won : "Not set" }}
+          </p>
       </div>
       <div class="mb-4 flex">
         <label class="font-bold mr-2"> Start Time:</label>
@@ -174,14 +189,9 @@ const qsetCurrentStatus = computed(() => {
       </div>
 
       <div class="mb-4">
-        <button
-          @click="startQuiz"
-          type="button"
-          href="#"
-          class="bg-primary text-light px-4 py-2 rounded hover:bg-primary"
+        <button @click="startQuiz" type="button" href="#" class="bg-primary text-light px-4 py-2 rounded hover:bg-primary"
           :disabled="qsetCurrentStatus.status !== 'in-progress'"
-          :class="qsetCurrentStatus.status !== 'in-progress' ? 'opacity-50 cursor-not-allowed' : ''"
-        >
+          :class="qsetCurrentStatus.status !== 'in-progress' ? 'opacity-50 cursor-not-allowed' : ''">
           Start Quiz
         </button>
       </div>
