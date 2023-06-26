@@ -19,6 +19,10 @@ const { isAuthenticated } = storeToRefs(useAuthStore());
             <router-link :to="{ name: 'organization-quiz' }" class="text-white"
               >Quiz</router-link
             >
+          </li><li>
+            <router-link :to="{ name: 'organization-quiz' }" class="text-white"
+              >Live score</router-link
+            >
           </li>
         </ul>
         <div v-if="!isAuthenticated">
