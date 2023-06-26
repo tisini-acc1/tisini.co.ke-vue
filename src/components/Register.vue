@@ -26,7 +26,7 @@ const rules = {
   last_name: {
     required: helpers.withMessage("Last name is required", required),
   },
-  username: {
+  nickname: {
     required: helpers.withMessage("Username is required", required),
     minLength: helpers.withMessage(
       "Username must be at least 3 characters",
@@ -47,15 +47,15 @@ const rules = {
   phone_number: {
     required: helpers.withMessage("Phone number is required", required),
     minLength: helpers.withMessage(
-      "Phone number must be at least 13 characters",
-      minLength(13)
+      "Phone number must be at least 10 digits",
+      minLength(10)
     ),
     maxLength: helpers.withMessage(
-      "Phone number must be at least 13 characters",
-      maxLength(13)
+      "Phone number must be at least 10 digits",
+      maxLength(10)
     ),
     phone: helpers.withMessage(
-      "Phone number must be in the format +254 000 000 0000",
+      "Phone number must be in the format 0(17)00 000 0000",
       TisiniValidator.validPhone
     ),
   },
@@ -64,7 +64,7 @@ const rules = {
 // const signUpStep = ref<SignUpStep>("personal");
 
 const formData = ref<SignupUserInterface>({
-  username: "",
+  nickname: "",
   password: "",
   email: "",
   last_name: "",
@@ -200,15 +200,15 @@ const handleSubmit = async (e: Event) => {
                   Username
                 </label>
                 <input
-                  v-model="formData.username"
+                  v-model="formData.nickname"
                   class="input"
                   id="grid-username"
                   type="text"
-                  placeholder="Username"
+                  placeholder="Nickname"
                   autocomplete="username"
                   aria-autocomplete="both" />
                 <ul class="error">
-                  <li v-for="err in $v.username.$errors">
+                  <li v-for="err in $v.nickname.$errors">
                     {{ err.$message }}
                   </li>
                 </ul>

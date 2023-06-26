@@ -1,6 +1,7 @@
 class TisiniValidator {
   // public static readonly phoneRegex: RegExp = new RegExp(/^(?:07|01)\d{8}$/, "gm");
-    public static readonly phoneRegex: RegExp = new RegExp(/^\+254(7|1)\d{8}$/, "gm");
+    // public static readonly phoneRegex: RegExp = new RegExp(/^\+254(7|1)\d{8}$/, "gm");
+    public static readonly phoneRegex: RegExp = new RegExp(/^0(7|1)\d{8}$/, "gm");
     public static readonly specialCharacters = new RegExp(
       /[\!\"\#\$\%\&\'\(\)\*\+\,\-\./\:;\<\=\>\?\@\[\\\]\^\_\`\{\|\}\~]/,
       "gm"

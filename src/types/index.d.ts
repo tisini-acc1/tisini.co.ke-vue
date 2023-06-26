@@ -1,5 +1,5 @@
 export interface SignupUserInterface {
-  username: string; // Username with a max length of 255 and min length of 1
+  nickname: string; // Nickname with a max length of 255 and min length of 1
   email: string; // Email with a max length of 255 and min length of 1
   first_name: string | null; // Optional first name with a max length of 255
   last_name: string | null; // Optional last name with a max length of 255
@@ -10,8 +10,8 @@ export interface SignupUserInterface {
 }
 
 export interface SignInUserInterface {
-  email: string;
-  password: string;
+  phone_number: string;// Phone number with a max length of 10 and min length of 10
+  password: string; // Password with a max length of 68 and min length of 6
 }
 
 export interface LoginTokenInterface {
@@ -26,7 +26,7 @@ export interface LoginUserResponseInterface extends UserInterface {
 export interface RegisterUserResponseInterface
   extends Pick<
     SignupUserInterface,
-    "username" | "email" | "first_name" | "last_name"
+    "nickname" | "email" | "first_name" | "last_name"
   > {
   id: number; // ID
   is_quiz_admin: boolean; // Is quiz admin flag

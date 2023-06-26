@@ -13,6 +13,7 @@ import { loginUserRequest } from "@/api/requests/auth-requests";
 import { setCookieToken } from "@/services/cookieService";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useRouter } from "vue-router";
+import TisiniValidator from "@/utils/tisiniValidator";
 const router = useRouter();
 const authStore = useAuthStore();
 const toast = useToast();
@@ -21,9 +22,17 @@ const nextRoute = router.currentRoute.value.query._redirect
   ? (router.currentRoute.value.query._redirect as string)
   : null;
 const loginRules = {
-  email: {
-    required: helpers.withMessage("Email is required", required),
-    email,
+  phone_number: {
+    required: helpers.withMessage("Phone number is required", required),
+    minLength: helpers.withMessage(
+      "Phone number must be at least 10 characters",
+      minLength(10)
+    ),
+    maxLength: helpers.withMessage(
+      "Phone number must be at most 10 characters",
+      minLength(10)
+    ),
+    phone_number: helpers.withMessage("Invalid phone number", TisiniValidator.validPhone),
   },
   password: {
     required: helpers.withMessage("Password required", required),
@@ -35,7 +44,7 @@ const loginRules = {
 };
 
 const formData = ref<SignInUserInterface>({
-  email: "",
+  phone_number: "",
   password: "",
 });
 const $v = useVuelidate(loginRules, formData.value);
@@ -127,16 +136,16 @@ const handleSubmit = async (e: Event) => {
             <form @submit="handleSubmit" class="mt-4 w-full">
               <div class="mb-3">
                 <label class="mb-2 block text-xs font-semibold"
-                  >Email address</label
+                  >Phone number</label
                 >
                 <input
-                  type="email"
-                  v-model="formData.email"
-                  placeholder="Enter your email address"
-                  autocomplete="email"
+                  type="tel"
+                  v-model="formData.phone_number"
+                  placeholder="Enter your phone number"
+                  autocomplete="tel-national"
                   class="block w-full rounded-md border border-gray-300 focus:border-primary-700 focus:outline-none focus:ring-1 focus:ring-primary-700 py-1 px-1.5 text-gray-500" />
-                <p v-if="$v.email.$error" class="text-sm text-red-400">
-                  <span v-for="err in $v.email.$errors" class="">{{
+                <p v-if="$v.phone_number.$error" class="text-sm text-red-400">
+                  <span v-for="err in $v.phone_number.$errors" class="block">{{
                     err.$message
                   }}</span>
                 </p>
