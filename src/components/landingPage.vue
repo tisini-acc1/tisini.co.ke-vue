@@ -55,7 +55,7 @@ onMounted(() => {
         <img
           alt="gallery"
           class="w-full h-64 object-cover object-center"
-          :src="fImage(index*1+10)!"
+          :src="article.featured_image?? fImage(index*1+10)!"
         />
         <div class="px-6 py-4">
           <h2
