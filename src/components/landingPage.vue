@@ -6,7 +6,6 @@ import { getArticles } from "@/api/requests/blogs";
 import { useToast } from "vue-toast-notification";
 import articles from "@/data/articles";
 import Loader from "@/components/Loader.vue";
-import he from "he";
 import stripHtmlTags from "@/utils/stripHtmlTags";
 const router = useRouter();
 const toast = useToast();
