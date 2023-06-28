@@ -65,7 +65,7 @@ onMounted(() => {
         </div>
         <div class="p-2 flex flex-col gap-2">
           <h1 class="p-2 font-bold uppercase">
-            {{ org.organization_name }} organization
+            {{ org.organization_name }}
           </h1>
           <p>Click on the link below to view active quiz available for play.</p>
           <router-link
