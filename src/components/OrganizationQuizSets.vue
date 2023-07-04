@@ -67,7 +67,7 @@ onMounted(() => {
         :key="questionset.uid"
         class="bg-white shadow overflow-hidden rounded sm:rounded-lg border hover:shadow-lg hover:border-transparent transition duration-300 ease-in-out">
         <div class="w-full">
-          <img :src="organization?.org_logo!" alt="" class="w-full h-60 object-fill top-0 left-0" />
+          <img :src="questionset?.theme_image!" alt="" class="w-full h-60 object-fill top-0 left-0" />
         </div>
 
         <div class="p-4 border-t">

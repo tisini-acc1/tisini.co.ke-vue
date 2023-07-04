@@ -30,7 +30,7 @@ onMounted(() => {
           position: "top-right",
         });
         isLoading.value = false;
-        posts.value = articles;
+        posts.value = [];
         return;
       } else {
         // console.log({ data });
@@ -49,7 +49,7 @@ onMounted(() => {
 <template>
   <div class="grid lg:grid-cols-3 sm:grid-cols-2 gap-2 p-2">
     <Loader :is-loading="isLoading" />
-    <div v-for="(article, index) in posts" :key="article.id" class="p-2">
+    <div v-if="posts.length>0" v-for="(article, index) in posts" :key="article.id" class="p-2">
       <div class="flex flex-col rounded-lg overflow-hidden shadow-lg">
         <img
           alt="gallery"
@@ -88,6 +88,11 @@ onMounted(() => {
           </router-link>
         </div>
       </div>
+    </div>
+    <!-- If no posts -->
+    <div v-else class="flex flex-col items-center justify-center text-center">
+      <h1 class="text-2xl font-bold text-gray-700">No Posts Available</h1>
+      <p class="text-gray-500">Please check back later</p>
     </div>
   </div>
 </template>

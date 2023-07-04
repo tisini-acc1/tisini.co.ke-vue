@@ -20,7 +20,7 @@ const { qset, orgId } = defineProps({
 const targetTime = ref(moment());
 
 // Set the target time to some date and time
-targetTime.value = combineDateAndTime(qset.play_date, qset.start_time);
+targetTime.value =moment(qset.start_datetime)//combineDateAndTime(qset.play_date, qset.start_time);
 
 // This will hold the remaining time to the target time
 const remainingTime = ref(moment.duration(targetTime.value.diff(moment())));

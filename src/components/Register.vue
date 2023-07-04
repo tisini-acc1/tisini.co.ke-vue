@@ -196,13 +196,13 @@ const handleSubmit = async (e: Event) => {
               <div class="w-full">
                 <label
                   class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2"
-                  for="grid-first-name">
+                  for="grid-nickname">
                   Nickname
                 </label>
                 <input
                   v-model="formData.nickname"
                   class="input"
-                  id="grid-username"
+                  id="grid-nickname"
                   type="text"
                   placeholder="Nickname"
                   autocomplete="username"

@@ -5,7 +5,7 @@ type QuizSetStatus = "not-started" | "in-progress" | "closed";
 
 type QuizSetPickedType = Pick<
   QuestionSetInterface,
-  "end_time" | "start_time" | "status" | "play_date"
+  "end_datetime" | "start_datetime" | "status" 
 >;
 
 type BadgeColors =
@@ -43,9 +43,9 @@ class QsetStatus {
   };
 
   public getStatus = (quizSetPicked: QuizSetPickedType): QuizSetStatus => {
-    const { end_time, start_time, status, play_date } = quizSetPicked;
-    const startDateTime = moment(play_date + " " + start_time);
-    const endDateTime = moment(play_date + " " + end_time);
+    const { end_datetime, start_datetime, status } = quizSetPicked;
+    const startDateTime = moment(start_datetime);
+    const endDateTime = moment(end_datetime);
     const currentDateTime = moment();
 
     if (status === "PL") {
@@ -64,15 +64,15 @@ class QsetStatus {
   };
 
   public getStartDate = (quizSetPicked: QuizSetPickedType): Date => {
-    const { start_time, play_date } = quizSetPicked;
-    const startDateTime = moment(play_date + " " + start_time);
+    const { start_datetime } = quizSetPicked;
+    const startDateTime = moment(start_datetime);
 
     return startDateTime.toDate();
   };
 
   public getEndDate = (quizSetPicked: QuizSetPickedType): Date => {
-    const { end_time, play_date } = quizSetPicked;
-    const endDateTime = moment(play_date + " " + end_time);
+    const { end_datetime} = quizSetPicked;
+    const endDateTime = moment(end_datetime);
 
     return endDateTime.toDate();
   };

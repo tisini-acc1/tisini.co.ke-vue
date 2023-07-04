@@ -86,14 +86,15 @@ export interface QuestionInterface {
 export interface QuestionSetInterface {
   uid: string; // UID
   category_name: string; // Category name with a max length of 300 and min length of 1
-  play_date: string; // Play date-time
-  start_time: string; // Start time
-  end_time: string; // End time
+  // play_date: string; // Play date-time
+  start_datetime: Date; // Start time
+  end_datetime: Date; // End time
   status: "PL" | "NP"; // PL - Played, NP - Not Played
   is_payable: "PA" | "NP"; // PA - Payable, NP - Not Payable
   amount_payable: number; // Amount payable
   prize_won: string; // Prize won
-  questions: QuestionInterface[]; // Array of Question objects
+  questions: QuestionInterface[]; // Array of Question objects,
+  theme_image: string; // Theme image
 }
 
 export interface OrganizationInterface {
