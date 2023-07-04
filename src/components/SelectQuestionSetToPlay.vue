@@ -71,11 +71,8 @@ onMounted(() => {
 const quizSetStatus = computed(() => {
   const qset = getCurrentQuestionSet.value;
   if (qset) {
-    const startDateTime = combineDateAndTime(
-      qset?.play_date!,
-      qset?.start_time!
-    );
-    const endDateTime = combineDateAndTime(qset?.play_date!, qset?.end_time!);
+    const startDateTime = moment(qset?.start_datetime);
+    const endDateTime = moment(qset?.end_datetime);
     const isStarted =
       moment().isSameOrAfter(startDateTime) &&
       moment().isSameOrBefore(endDateTime);
